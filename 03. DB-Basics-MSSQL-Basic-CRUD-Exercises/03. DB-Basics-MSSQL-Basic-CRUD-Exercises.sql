@@ -4,7 +4,7 @@
 
 --3
 
-select Name from departments
+	select Name from departments
 
 --4
 

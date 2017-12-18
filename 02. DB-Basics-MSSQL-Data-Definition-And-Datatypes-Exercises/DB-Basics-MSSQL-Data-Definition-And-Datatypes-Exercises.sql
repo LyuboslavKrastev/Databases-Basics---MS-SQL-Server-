@@ -14,23 +14,23 @@
 
 --7
 
-		Create TABLE People (
-	Id INT PRIMARY KEY IDENTITY,
-		Name NVARCHAR(200) not null,
-		Picture VARBINARY(MAX) CHECK (DATALENGTH(PICTURE) <= 2097152),
-		Height DECIMAL(8, 2),
-		Weight DECIMAL(8, 2),
-		Gender NVARCHAR(1) check (Gender in ('m', 'f')) not null,
-		Birthdate DATE not null,
-		Biography NVARCHAR(MAX) 
+	Create TABLE People (
+Id INT PRIMARY KEY IDENTITY,
+	Name NVARCHAR(200) not null,
+	Picture VARBINARY(MAX) CHECK (DATALENGTH(PICTURE) <= 2097152),
+	Height DECIMAL(8, 2),
+	Weight DECIMAL(8, 2),
+	Gender NVARCHAR(1) check (Gender in ('m', 'f')) not null,
+	Birthdate DATE not null,
+	Biography NVARCHAR(MAX) 
 	)
 
 	INSERT INTO People (Name, Picture, Height, Weight, Gender, Birthdate, Biography) VALUES
-	('Joro', null, 60,23, 'f', '19920405', 'someTextHere'),
-    ('Zoro', null, 60,23, 'f', '19920405', 'someTextHere'),
-    ('Toro', null, 60,23, 'f', '19920405', 'someTextHere'),
-    ('Boro', null, 60,23, 'f', '19920405', 'someTextHere'),
-    ('Goro', null, 60,23, 'f', '19920405', 'someTextHere')
+	 ('Joro', null, 60,23, 'f', '19920405', 'someTextHere'),
+   	 ('Zoro', null, 60,23, 'f', '19920405', 'someTextHere'),
+   	 ('Toro', null, 60,23, 'f', '19920405', 'someTextHere'),
+   	 ('Boro', null, 60,23, 'f', '19920405', 'someTextHere'),
+   	 ('Goro', null, 60,23, 'f', '19920405', 'someTextHere')
 --8
 	Create TABLE Users (
 	Id BIGINT PRIMARY KEY IDENTITY,
@@ -121,7 +121,7 @@
 
 
 	INSERT INTO Categories (CategoryName, DailyRate, WeeklyRate, MonthlyRate, WeekendRate) VALUES
-	('Joro',  60,23, 150.24, 166.42),
+	 ('Joro',  60,23, 150.24, 166.42),
 	 ('Zoro', 60,23, 150.24, 166.42),
 	 ('Toro', 60,23, 150.24, 166.42)
  
@@ -198,7 +198,8 @@
 
 --15
 
-		--•	Employees (Id, FirstName, LastName, Title, Notes)
+	--Employees (Id, FirstName, LastName, Title, Notes)
+	
 	CREATE TABLE Employees (
 	Id INT PRIMARY KEY IDENTITY,
 	FirstName NVARCHAR(MAX) NOT NULL,
@@ -269,7 +270,7 @@
 	(2, 2, 1, 12.45, 2, 'COOLNOTES'),
 	(3, 2, 1, 12.45, 2, 'COOLNOTES')
 
-	--•	Payments (Id, EmployeeId, PaymentDate, 
+	--â€¢	Payments (Id, EmployeeId, PaymentDate, 
 	--AccountNumber, FirstDateOccupied, 
 	--LastDateOccupied, TotalDays, AmountCharged, 
 	--TaxRate, TaxAmount, PaymentTotal, Notes)

@@ -111,6 +111,17 @@
 	LEAD (DepositAmount) OVER (ORDER BY Id) AS GuestAmount
 	 from WizzardDeposits) AS DIFF) as Difff
 	 
+	 -- other variant, using lead again
+	 
+	 SELECT SUM(wizardDep.Difference) FROM
+	 (
+	 SELECT FirstName, DepositAmount,
+	 LEAD(FirstName) OVER (ORDER BY Id) AS GuestWizard, -- note to self: the opposite of LEAD is LAG(gets the previous element)
+	 LEAD(DepositAmount) OVER (ORDER BY Id) AS GuestAmount 
+	 DepositAmount - LEAD(DepositAmount) OVER (ORDER BY Id)  AS Difference
+	 FROM WizzardDeposits
+	 ) AS wizardDep
+	 
 	 -- other variant, using a cursor
 	 
 	 DECLARE @currentDeposit DECIMAL(8,2)
@@ -176,11 +187,12 @@
 
 --18
 
-	SELECT DepartmentId, Salary FROM 
+	SELECT salaries.DepartmentId, salaries.Salary FROM 
 	(SELECT DepartmentId,
-	 Salary AS Salary, DENSE_RANK() OVER (PARTITION BY DepartmentID ORDER BY Salary DESC) as Rank
+	 Salary, 
+	 DENSE_RANK() OVER (PARTITION BY DepartmentID ORDER BY Salary DESC) AS Rank
 	FROM Employees
-	GROUP BY DepartmentID, Salary) AS PART
+	GROUP BY DepartmentID, Salary) AS salaries
 	WHERE Rank = 3
 
 --19
@@ -190,3 +202,13 @@
 		  from employees e
 		 ) e
 	where e.salary > e.avgsalary;
+	
+	--other variant, using a subquery with a WHERE clause that depends on a parameter from the calling querry 
+	
+	SELECT TOP 10 FirstName, LastName, DepartmentId FROM Employees as e
+	WHERE Salary > 
+	(
+		SELECT AVG(Salary) FROM Employees as emp
+		WHERE e.DepartmentId = emp.DepartmentId
+		GROUP BY DepartmentId
+	)

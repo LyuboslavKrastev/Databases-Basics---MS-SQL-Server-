@@ -16,6 +16,12 @@
 	SELECT TOP 2 DepositGroup From WizzardDeposits
 	GROUP BY DepositGroup
 	ORDER BY AVG(MagicWandSize)
+	
+	--other variant, which returns dynamically
+	
+	SELECT TOP 1 WITH TIES DepositGroup From WizzardDeposits
+	GROUP BY DepositGroup
+	ORDER BY AVG(MagicWandSize)
 
 --5
 

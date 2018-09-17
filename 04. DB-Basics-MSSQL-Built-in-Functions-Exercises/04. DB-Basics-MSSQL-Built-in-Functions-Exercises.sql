@@ -63,10 +63,19 @@
 
 --11
 
-	SELECT PeakName, RiverName, CONCAT (LOWER (PeakName), SUBSTRING(LOWER(RiverName),2, LEN(RiverName))) AS Mix  FROM Peaks, Rivers 
+	SELECT PeakName, RiverName, 
+	CONCAT (LOWER (PeakName), SUBSTRING(LOWER(RiverName),2, LEN(RiverName))) AS Mix  FROM Peaks, Rivers 
 	WHERE RIGHT(PeakName, 1) = LEFT(RiverName, 1)
 	ORDER BY Mix
-
+												
+												
+	--other variant
+	SELECT PeakName,
+	       Rivername
+	       LOWER(PeakName + RIGHT(RiverName, LEN(RiverName) - 1)) AS Mix
+	FROM   Rivers, Peaks
+	WHERE  RIGHT(PeakName, 1) = LEFT(RiverName, 1)
+				       
 --12
 
 	Select TOP 50 Name, convert(varchar(10), Start, 120) AS Start FROM Games

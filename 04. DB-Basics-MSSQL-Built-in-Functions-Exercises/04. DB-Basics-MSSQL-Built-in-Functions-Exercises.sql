@@ -75,6 +75,7 @@
 	       LOWER(PeakName + RIGHT(RiverName, LEN(RiverName) - 1)) AS Mix
 	FROM   Rivers, Peaks
 	WHERE  RIGHT(PeakName, 1) = LEFT(RiverName, 1)
+	ORDER BY Mix			      
 				       
 --12
 
@@ -90,7 +91,7 @@
 --14
 
 	SELECT Username, IpAddress FROM Users
-	WHERE IpAddress LIKE '___.1_%._%.___'
+	WHERE IpAddress LIKE '___.1_%._%.___' -- or just LIKE '___.1%.%.___'
 	ORDER BY Username
 
 --15

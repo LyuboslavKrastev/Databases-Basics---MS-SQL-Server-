@@ -110,7 +110,30 @@
 	select FirstName, DepositAmount as HostAmount,
 	LEAD (DepositAmount) OVER (ORDER BY Id) AS GuestAmount
 	 from WizzardDeposits) AS DIFF) as Difff
-
+	 
+	 -- other variant, using a cursor
+	 
+	 DECLARE @currentDeposit DECIMAL(8,2)
+	 DECLARE @previousDeposit DECIMAL(8,2)
+	 DECLARE @totalSum DECIMAL(8,2) = 0	 
+	 
+	 DECLARE wizardCursor CURSOR FOR SELECT DepositAmount FROM WizzardDeposits
+	 OPEN wizardCursor
+	 FETCH NEXT FROM wizardCursor INTO @currentDeposit
+	 
+	 WHILE (@@FETCH_STATUS = 0) -- returns 0 when the cursor has data and 1 when empty
+	 BEGIN
+	 IF (@previousDeposit IS NOT NULL) -- so that we dont get (NULL - @currentDeposit) which will result in totalSum being NULL aswell
+	 BEGIN
+	 SET @totalSum += (@previousDeposit - @currentDeposit)
+	 END
+	 SET @previousDeposit = @currentDeposit
+	 FETCH NEXT FROM wizardCursor INTO @currentDeposit
+	 END
+	 CLOSE wizardCursor
+	 DEALLOCATE wizardCursor -- dispose of the cursor
+	 
+	 SELECT @totalSum
 --13
 
 	SELECT DepartmentID, SUM(Salary)  FROM Employees
